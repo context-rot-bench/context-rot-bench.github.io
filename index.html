@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContextRotBench: Measuring Long-Horizon Degradation in Coding Agents</title>
+  <meta name="description" content="ContextRotBench evaluates coding-agent reliability under task switches, interruptions, and filler context, measuring task performance and persistent instruction adherence.">
+  <meta name="theme-color" content="#1e293b">
+  <link rel="canonical" href="https://context-rot-bench.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ContextRotBench: Measuring Long-Horizon Degradation in Coding Agents">
+  <meta property="og:description" content="A benchmark and framework for studying how accumulated interaction history affects coding agents.">
+  <meta property="og:url" content="https://context-rot-bench.github.io/">
+  <meta property="og:image" content="https://context-rot-bench.github.io/static/images/context_rot_bench_overview.png">
+  <meta property="og:image:alt" content="Overview of the ContextRotBench evaluation framework">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="citation_title" content="ContextRotBench: Measuring Long-Horizon Degradation in Coding Agents">
+  <meta name="citation_author" content="Dylan Lu">
+  <meta name="citation_author" content="Surya Gunukula">
+  <meta name="citation_author" content="Saaket Agashe">
+  <meta name="citation_author" content="Tengxiao Liu">
+  <meta name="citation_author" content="Xin Eric Wang">
+  <meta name="citation_publication_date" content="2026">
+  <link rel="icon" href="static/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/site.css">
+  <script src="static/js/site.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#abstract">Skip to abstract</a>
+<header class="hero">
+  <div class="container">
+    <h1 tabindex="-1">ContextRotBench: Measuring Long-Horizon Degradation in Coding Agents</h1>
+    <ul class="authors" aria-label="Authors">
+      <li><a href="https://www.dylanlu.com/">Dylan Lu</a><sup>*</sup></li>
+      <li><a href="https://github.com/Surya-Gunukula">Surya Gunukula</a><sup>*</sup></li>
+      <li><a href="https://saa1605.github.io/">Saaket Agashe</a></li>
+      <li><a href="https://tengxiaoliu.github.io/">Tengxiao Liu</a></li>
+      <li><a href="https://eric-xw.github.io/">Xin Eric Wang</a></li>
+    </ul>
+    <p class="affiliation">University of California, Santa Barbara</p>
+    <p class="equal"><sup>*</sup>Equal contribution.</p>
+    <p class="venue">COLM 2026 · <a href="https://context-beyond-window.github.io/">Context Beyond the Window Workshop</a></p>
+    <nav class="resource-links" aria-label="Project resources">
+      <a class="resource" href="https://openreview.net/forum?id=DiZ67nkfay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/></svg>Paper</a>
+      <a class="resource" href="static/files/contextrotbench-poster.pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M7 7h10M7 11h4v6H7zM14 11h3M14 14h3M14 17h3"/></svg>Poster</a>
+      <a class="resource" href="static/data/results.csv" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>Results CSV</a>
+      <span class="resource unavailable" aria-label="Code coming soon">Code <span class="soon">Coming soon</span></span>
+      <span class="resource unavailable" aria-label="arXiv coming soon">arXiv <span class="soon">Coming soon</span></span>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="teaser" aria-label="Benchmark overview">
+    <div class="container">
+      <figure>
+        <a class="figure-link" href="static/images/context_rot_bench_overview.png" aria-label="View the benchmark overview at full resolution"><img class="paper-figure" src="static/images/context_rot_bench_overview.png" alt="ContextRotBench converts software-engineering tasks and persistent style instructions into scheduled evaluations, executes four history conditions with isolated side-task containers, and scores instruction adherence and task progress." width="1672" height="941" fetchpriority="high"></a>
+        <figcaption><strong>ContextRotBench overview.</strong> The same coding task is evaluated under different interaction histories. Side tasks, interruptions, and filler add context while the benchmark measures both task progress and adherence to persistent user instructions.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section tinted" id="abstract">
+    <div class="container reading">
+      <h2>Abstract</h2>
+      <div class="prose">
+        <p>Coding agents must maintain task performance and follow user instructions over extended interactions. As their history accumulates, they may exhibit <em>context rot</em>: degradation associated with growing context. Existing long-context evaluations largely study static retrieval, leaving reliability during ongoing agent interaction less understood.</p>
+        <p>We introduce <strong>ContextRotBench</strong>, a benchmark and framework that varies accumulated history while keeping the underlying coding tasks fixed. Through controlled task switches, interruptions, and filler context, we evaluate both task performance and adherence to persistent instructions. The reported results suggest that the content and timing of accumulated history are important factors in agent reliability.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="framework">
+    <div class="container">
+      <h2>The ContextRotBench Framework</h2>
+      <div class="reading prose">
+        <p>Real software development involves switching between tasks, recovering from interruptions, and retaining requirements across many interactions. Locating an earlier instruction in a long context is only part of this challenge; an agent must also continue applying it during later actions.</p>
+        <p>ContextRotBench adapts software-engineering tasks into sequences of <strong>verifiable target steps</strong>. Each evaluation combines a base task, persistent user constraints, and a schedule that controls the additional history the agent encounters.</p>
+      </div>
+      <figure>
+        <a class="figure-link" href="static/images/context_rot_task_construction.png" aria-label="View task construction at full resolution"><img class="paper-figure" src="static/images/context_rot_task_construction.png" alt="Existing software-engineering benchmark tasks are converted into base step tasks with checked target steps. Conditions, persistent instruction needles, and schedules are layered on top to create executable evaluations." width="1672" height="941" loading="lazy"></a>
+        <figcaption><strong>Constructing benchmark instances.</strong> Source tasks are converted into checked steps before adding instructions and context interventions. The framework supports adapting additional software-engineering benchmarks.</figcaption>
+      </figure>
+      <div class="reading conditions">
+        <h3>Four controlled conditions</h3>
+        <dl>
+          <dt>Baseline</dt><dd>The agent completes the target trajectory without intervening work.</dd>
+          <dt>Interleaved</dt><dd>Unrelated coding tasks occur between target steps.</dd>
+          <dt>Interrupted</dt><dd>Unrelated work interrupts a target step before the agent resumes it.</dd>
+          <dt>Filler</dt><dd>Task-irrelevant text adds context between target steps.</dd>
+        </dl>
+        <p class="prose isolation">The evaluated agent performs the intervening work during live execution. Side tasks run in separate containers, so their conversation history accumulates without changing the target workspace.</p>
+        <h3>Persistent instructions</h3>
+        <p class="prose">Automatically checked style constraints—such as avoiding Python f-strings—remain active across later target steps. These constraints deliberately differ from conventional coding style, helping distinguish continued instruction following from the model’s default behavior.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tinted" id="results">
+    <div class="container">
+      <h2>Results</h2>
+      <div class="reading prose">
+        <p>The reported experiments use <strong>32 RoadmapBench-derived tasks</strong> across Python, Go, and TypeScript repositories, evaluated with the OpenHands agent framework. We measure instruction following as the percentage of active constraint checks satisfied after target steps. Task performance uses the source benchmark’s fine-grained task score.</p>
+      </div>
+      <p class="mobile-table-hint">Swipe tables horizontally to view all conditions.</p>
+      <div class="table-scroll" role="region" aria-labelledby="if-caption" tabindex="0"><table class="results-table" data-metric="instruction_following">
+<caption id="if-caption">Instruction following (%)</caption>
+<thead><tr><th scope="col">Model</th><th scope="col">Baseline</th><th scope="col">Interleaved</th><th scope="col">Interrupted</th><th scope="col">Filler</th></tr></thead><tbody>
+<tr><th scope="row">DeepSeek V4 Flash</th>
+<td class="baseline" data-condition="baseline" data-status="reported" data-score="77.4" data-change="0.0">77.4</td>
+<td class="drop" data-condition="interleaved" data-status="reported" data-score="73.6" data-change="-3.8">73.6 <span class="delta">(−3.8)</span></td>
+<td class="drop" data-condition="interrupted" data-status="reported" data-score="72.1" data-change="-5.3">72.1 <span class="delta">(−5.3)</span></td>
+<td class="" data-condition="filler" data-status="reported" data-score="74.9" data-change="-2.5">74.9 <span class="delta">(−2.5)</span></td>
+</tr>
+<tr><th scope="row">Qwen3-Coder-30B</th>
+<td class="baseline" data-condition="baseline" data-status="reported" data-score="63.6" data-change="0.0">63.6</td>
+<td class="" data-condition="interleaved" data-status="reported" data-score="63.2" data-change="-0.4">63.2 <span class="delta">(−0.4)</span></td>
+<td class="" data-condition="interrupted" data-status="reported" data-score="64.4" data-change="0.8">64.4 <span class="delta">(+0.8)</span></td>
+<td class="" data-condition="filler" data-status="reported" data-score="61.1" data-change="-2.5">61.1 <span class="delta">(−2.5)</span></td>
+</tr>
+<tr><th scope="row">Nemotron 3 Ultra</th>
+<td class="baseline" data-condition="baseline" data-status="reported" data-score="75.6" data-change="0.0">75.6</td>
+<td class="drop" data-condition="interleaved" data-status="partial_asterisk" data-score="71.1" data-change="-4.5">71.1<sup aria-label="incomplete evaluation">*</sup> <span class="delta">(−4.5)</span></td>
+<td class="large-drop" data-condition="interrupted" data-status="partial_asterisk" data-score="66.7" data-change="-8.9">66.7<sup aria-label="incomplete evaluation">*</sup> <span class="delta">(−8.9)</span></td>
+<td class="missing" data-condition="filler" data-status="missing" aria-label="Missing run">—</td>
+</tr>
+<tr><th scope="row">Kimi K2.7 Code</th>
+<td class="baseline" data-condition="baseline" data-status="reported" data-score="87.3" data-change="0.0">87.3</td>
+<td class="large-drop" data-condition="interleaved" data-status="partial_asterisk" data-score="79.6" data-change="-7.7">79.6<sup aria-label="incomplete evaluation">*</sup> <span class="delta">(−7.7)</span></td>
+<td class="large-drop" data-condition="interrupted" data-status="reported" data-score="67.2" data-change="-20.1">67.2 <span class="delta">(−20.1)</span></td>
+<td class="missing" data-condition="filler" data-status="missing" aria-label="Missing run">—</td>
+</tr>
+<tr><th scope="row">Kimi K2.6</th>
+<td class="baseline" data-condition="baseline" data-status="reported" data-score="78.4" data-change="0.0">78.4</td>
+<td class="large-drop" data-condition="interleaved" data-status="reported" data-score="61.9" data-change="-16.5">61.9 <span class="delta">(−16.5)</span></td>
+<td class="large-drop" data-condition="interrupted" data-status="reported" data-score="45.3" data-change="-33.1">45.3 <span class="delta">(−33.1)</span></td>
+<td class="drop" data-condition="filler" data-status="reported" data-score="75.2" data-change="-3.2">75.2 <span class="delta">(−3.2)</span></td>
+</tr>
+</tbody></table></div>
+      <div class="table-scroll" role="region" aria-labelledby="task-caption" tabindex="0"><table class="results-table" data-metric="pass_rate">
+<caption id="task-caption">Task performance (%)</caption>
+<thead><tr><th scope="col">Model</th><th scope="col">Baseline</th><th scope="col">Interleaved</th><th scope="col">Interrupted</th><th scope="col">Filler</th></tr></thead><tbody>
+<tr><th scope="row">DeepSeek V4 Flash</th>
+<td class="baseline" data-condition="baseline" data-status="reported" data-score="28.7" data-change="0.0">28.7</td>
+<td class="drop" data-condition="interleaved" data-status="reported" data-score="23.6" data-change="-5.1">23.6 <span class="delta">(−5.1)</span></td>
+<td class="drop" data-condition="interrupted" data-status="reported" data-score="23.9" data-change="-4.8">23.9 <span class="delta">(−4.8)</span></td>
+<td class="drop" data-condition="filler" data-status="reported" data-score="25.5" data-change="-3.2">25.5 <span class="delta">(−3.2)</span></td>
+</tr>
+<tr><th scope="row">Qwen3-Coder-30B</th>
+<td class="baseline" data-condition="baseline" data-status="reported" data-score="11.9" data-change="0.0">11.9</td>
+<td class="drop" data-condition="interleaved" data-status="reported" data-score="8.4" data-change="-3.5">8.4 <span class="delta">(−3.5)</span></td>
+<td class="large-drop" data-condition="interrupted" data-status="reported" data-score="3.4" data-change="-8.5">3.4 <span class="delta">(−8.5)</span></td>
+<td class="drop" data-condition="filler" data-status="reported" data-score="8.3" data-change="-3.6">8.3 <span class="delta">(−3.6)</span></td>
+</tr>
+<tr><th scope="row">Nemotron 3 Ultra</th>
+<td class="baseline" data-condition="baseline" data-status="reported" data-score="12.9" data-change="0.0">12.9</td>
+<td class="large-drop" data-condition="interleaved" data-status="partial_asterisk" data-score="5.0" data-change="-7.9">5.0<sup aria-label="incomplete evaluation">*</sup> <span class="delta">(−7.9)</span></td>
+<td class="large-drop" data-condition="interrupted" data-status="partial_asterisk" data-score="2.4" data-change="-10.5">2.4<sup aria-label="incomplete evaluation">*</sup> <span class="delta">(−10.5)</span></td>
+<td class="missing" data-condition="filler" data-status="missing" aria-label="Missing run">—</td>
+</tr>
+<tr><th scope="row">Kimi K2.7 Code</th>
+<td class="baseline" data-condition="baseline" data-status="reported" data-score="16.9" data-change="0.0">16.9</td>
+<td class="" data-condition="interleaved" data-status="partial_asterisk" data-score="17.1" data-change="0.2">17.1<sup aria-label="incomplete evaluation">*</sup> <span class="delta">(+0.2)</span></td>
+<td class="large-drop" data-condition="interrupted" data-status="partial_asterisk" data-score="9.6" data-change="-7.3">9.6<sup aria-label="incomplete evaluation">*</sup> <span class="delta">(−7.3)</span></td>
+<td class="missing" data-condition="filler" data-status="missing" aria-label="Missing run">—</td>
+</tr>
+<tr><th scope="row">Kimi K2.6</th>
+<td class="baseline" data-condition="baseline" data-status="reported" data-score="13.1" data-change="0.0">13.1</td>
+<td class="large-drop" data-condition="interleaved" data-status="partial_asterisk" data-score="6.7" data-change="-6.4">6.7<sup aria-label="incomplete evaluation">*</sup> <span class="delta">(−6.4)</span></td>
+<td class="" data-condition="interrupted" data-status="partial_asterisk" data-score="15.3" data-change="2.2">15.3<sup aria-label="incomplete evaluation">*</sup> <span class="delta">(+2.2)</span></td>
+<td class="" data-condition="filler" data-status="reported" data-score="13.1" data-change="0.0">13.1 <span class="delta">(+0.0)</span></td>
+</tr>
+</tbody></table></div>
+      <div class="table-notes" id="result-notes">
+        <p>Scores are percentages. Parentheses show the change from the same model’s baseline in percentage points. <span class="drop">Red</span> marks drops above 3 points; <span class="large-drop">bold dark red</span> marks drops above 6 points.</p>
+        <p><strong>*</strong> Incomplete evaluations affected by side-task refusal or no-action traces. <strong>—</strong> Missing runs. Partial results should be interpreted cautiously. Values are transcribed from the paper’s results table. <a href="static/data/results.csv" download>Download the table as CSV.</a></p>
+      </div>
+      <div class="reading prose findings">
+        <p><strong>Effects of accumulated history.</strong> Intervening task history reduces instruction following for several evaluated models. The largest observed reductions occur under interruption, while filler generally produces smaller changes in instruction following.</p>
+        <p><strong>Complementary measures.</strong> Task performance and instruction adherence do not always change together. For example, Qwen3-Coder-30B’s task score decreases under interruption while its instruction-following score remains near baseline.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="analysis">
+    <div class="container">
+      <h2>Attention to Persistent Instructions</h2>
+      <div class="reading prose">
+        <p>We examine attention in Qwen3-Coder-30B over <strong>40 trajectories</strong>, averaging across 48 layers and reading from 256 query positions. The analysis distinguishes target-task content, side-task interruptions, filler, and the persistent instruction region.</p>
+      </div>
+      <figure>
+        <a class="figure-link" href="static/images/attention_analysis.png" aria-label="View the three attention analysis panels at full resolution"><img class="paper-figure" src="static/images/attention_analysis.png" alt="Three attention panels: target-task and interruption regions receive more attention per token than filler; attention to persistent instructions declines from an early mean of 0.51 to a late mean of 0.35; an example attention map shows strong recency and a fading band to the initial instructions." width="2304" height="628" loading="lazy"></a>
+        <figcaption><strong>Attention analysis from the paper.</strong> (a) Attention per token varies by content type. (b) Attention to persistent instructions decreases as the trajectory progresses. (c) An example attention map shows recency alongside a fading band to the beginning of the context. Select the figure to view it at full resolution.</figcaption>
+      </figure>
+      <div class="reading prose analysis-notes">
+        <p>Target steps receive about 3.9× the per-token attention of filler; task-shaped interruptions receive about 1.6×. Mean attention to the persistent instruction region decreases from <strong>0.51 to 0.35</strong>, even though those instructions remain in context. These observations offer suggestive evidence about the behavioral results, rather than establishing a causal mechanism.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tinted" id="case-study">
+    <div class="container reading">
+      <h2>Constraint Drift in a Coding Trajectory</h2>
+      <div class="prose">
+        <p>A PyTorch Geometric graph-augmentation task illustrates how an agent can continue pursuing the requested functionality while losing adherence to persistent constraints. The paper compares the same target in a clean run and after four intervening side-task turns.</p>
+      </div>
+      <div class="table-scroll" role="region" aria-label="Trajectory comparison" tabindex="0">
+        <table class="case-table">
+          <thead><tr><th scope="col">Clean history</th><th scope="col">After four side-task turns</th></tr></thead>
+          <tbody><tr><td><strong>16 / 16</strong> active style checks satisfied</td><td><strong>6 / 16</strong> active style checks satisfied</td></tr>
+          <tr><td>Maintains the explicitly requested coding conventions.</td><td>Reverts to conventional Python patterns such as <code>from torch import Tensor</code> and <code>isinstance(...)</code>, violating persistent constraints.</td></tr></tbody>
+        </table>
+      </div>
+      <p class="table-notes">An illustrative trajectory comparison from the paper’s appendix; it is not an aggregate estimate.</p>
+    </div>
+  </section>
+
+  <section class="section" id="discussion">
+    <div class="container reading">
+      <h2>Discussion</h2>
+      <div class="prose">
+        <p>ContextRotBench makes accumulated interaction history a controlled variable in coding-agent evaluation. The results motivate evaluating the <strong>content and timing of intervening work alongside context length</strong>, and measuring persistent instruction adherence alongside task performance.</p>
+        <p class="limits">The reported experiments cover a 32-task subset, one agent framework, and a fixed set of conditions and instruction placements. Broader evaluation and interventions such as context filtering or explicit constraint refresh are directions for future work.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tinted" id="citation">
+    <div class="container reading">
+      <div class="citation-header">
+        <h2>BibTeX</h2>
+        <button class="copy-button" id="copy-citation" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/></svg><span>Copy</span></button>
+      </div>
+      <pre><code id="bibtex-code">@misc{lu2026contextrotbench,
+  title={ContextRotBench: Measuring Long-Horizon Degradation in Coding Agents},
+  author={Dylan Lu and Surya Gunukula and Saaket Agashe and Tengxiao Liu and Xin Eric Wang},
+  year={2026},
+  note={COLM Context Beyond the Window Workshop},
+  url={https://openreview.net/forum?id=DiZ67nkfay}
+}</code></pre>
+      <div class="copy-status" id="copy-status" role="status" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>Website design inspired by <a href="https://enact-tom.github.io/">EnactToM</a> and the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a>, adapted from <a href="https://nerfies.github.io/">Nerfies</a>.</p>
+  </div>
+</footer>
+<button class="back-to-top" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 14 7-7 7 7M12 7v14"/></svg></button>
+</body>
+</html>

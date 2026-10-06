@@ -1,0 +1,41 @@
+model,metric,condition,score_percent,change_from_baseline_pp,status
+DeepSeek V4 Flash,instruction_following,baseline,77.4,0.0,reported
+DeepSeek V4 Flash,instruction_following,interleaved,73.6,-3.8,reported
+DeepSeek V4 Flash,instruction_following,interrupted,72.1,-5.3,reported
+DeepSeek V4 Flash,instruction_following,filler,74.9,-2.5,reported
+Qwen3-Coder-30B,instruction_following,baseline,63.6,0.0,reported
+Qwen3-Coder-30B,instruction_following,interleaved,63.2,-0.4,reported
+Qwen3-Coder-30B,instruction_following,interrupted,64.4,0.8,reported
+Qwen3-Coder-30B,instruction_following,filler,61.1,-2.5,reported
+Nemotron 3 Ultra,instruction_following,baseline,75.6,0.0,reported
+Nemotron 3 Ultra,instruction_following,interleaved,71.1,-4.5,partial_asterisk
+Nemotron 3 Ultra,instruction_following,interrupted,66.7,-8.9,partial_asterisk
+Nemotron 3 Ultra,instruction_following,filler,,,missing
+Kimi K2.7 Code,instruction_following,baseline,87.3,0.0,reported
+Kimi K2.7 Code,instruction_following,interleaved,79.6,-7.7,partial_asterisk
+Kimi K2.7 Code,instruction_following,interrupted,67.2,-20.1,reported
+Kimi K2.7 Code,instruction_following,filler,,,missing
+Kimi K2.6,instruction_following,baseline,78.4,0.0,reported
+Kimi K2.6,instruction_following,interleaved,61.9,-16.5,reported
+Kimi K2.6,instruction_following,interrupted,45.3,-33.1,reported
+Kimi K2.6,instruction_following,filler,75.2,-3.2,reported
+DeepSeek V4 Flash,pass_rate,baseline,28.7,0.0,reported
+DeepSeek V4 Flash,pass_rate,interleaved,23.6,-5.1,reported
+DeepSeek V4 Flash,pass_rate,interrupted,23.9,-4.8,reported
+DeepSeek V4 Flash,pass_rate,filler,25.5,-3.2,reported
+Qwen3-Coder-30B,pass_rate,baseline,11.9,0.0,reported
+Qwen3-Coder-30B,pass_rate,interleaved,8.4,-3.5,reported
+Qwen3-Coder-30B,pass_rate,interrupted,3.4,-8.5,reported
+Qwen3-Coder-30B,pass_rate,filler,8.3,-3.6,reported
+Nemotron 3 Ultra,pass_rate,baseline,12.9,0.0,reported
+Nemotron 3 Ultra,pass_rate,interleaved,5.0,-7.9,partial_asterisk
+Nemotron 3 Ultra,pass_rate,interrupted,2.4,-10.5,partial_asterisk
+Nemotron 3 Ultra,pass_rate,filler,,,missing
+Kimi K2.7 Code,pass_rate,baseline,16.9,0.0,reported
+Kimi K2.7 Code,pass_rate,interleaved,17.1,0.2,partial_asterisk
+Kimi K2.7 Code,pass_rate,interrupted,9.6,-7.3,partial_asterisk
+Kimi K2.7 Code,pass_rate,filler,,,missing
+Kimi K2.6,pass_rate,baseline,13.1,0.0,reported
+Kimi K2.6,pass_rate,interleaved,6.7,-6.4,partial_asterisk
+Kimi K2.6,pass_rate,interrupted,15.3,2.2,partial_asterisk
+Kimi K2.6,pass_rate,filler,13.1,0.0,reported
